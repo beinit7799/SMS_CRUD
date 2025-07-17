@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Password;
 
 class AuthController extends Controller
 {
-    // Show Login Form (if needed)
     public function showLogin()
     {
         return view('auth.login');
@@ -54,7 +53,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->intended('home'); // or home
+        return redirect()->intended('home');
     }
 
     public function showForgotPassword()
@@ -62,7 +61,6 @@ class AuthController extends Controller
         return view('auth.forgot-password');
     }
 
-    // Handle Forgot Password POST (send reset link)
     public function sendResetLinkEmail(Request $request)
     {
         $request->validate(['email' => 'required|email']);
