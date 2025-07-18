@@ -5,6 +5,15 @@
 @section('content')
   <h1>Student List</h1>
 
+  <!-- Search Form -->
+  <div class="table-header">
+    <form action="{{ route('student.list') }}" method="GET" class="search-form">
+    <input type="text" name="search" placeholder="Search by name..." value="{{ $search ?? '' }}"/> 
+       <button type="submit">Search</button>
+    </form>
+  </div>
+
+  <!-- Student Table -->
   <table class="student-table">
     <thead>
       <tr>
@@ -32,20 +41,18 @@
           <td>{{ $student->course }}</td>
           <td>
             <div class="action-buttons">
-                <a href="{{ route('student.edit', $student->id) }}" class="btn edit">Edit</a>
-
-                <form action="{{ route('student.destroy', $student->id) }}" method="POST">
+              <a href="{{ route('student.edit', $student->id) }}" class="btn edit">Edit</a>
+              <form action="{{ route('student.destroy', $student->id) }}" method="POST">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn delete" onclick="return confirm('Are you sure you want to delete this student?')">Delete</button>
-                </form>
+                <button type="submit" class="btn delete" onclick="return confirm('Are you sure?')">Delete</button>
+              </form>
             </div>
           </td>
-
         </tr>
       @empty
         <tr>
-          <td colspan="5">No students found.</td>
+          <td colspan="9">No students found.</td>
         </tr>
       @endforelse
     </tbody>
@@ -54,6 +61,11 @@
 
 @push('styles')
 <style>
+  .table-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
     .action-buttons {
   display: flex;
   gap: 0.5rem;
@@ -114,6 +126,30 @@
   .btn.delete:hover {
     background-color: #c0392b;
   }
+  
+.search-form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.search-form input[type="text"] {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-form button {
+  padding: 0.5rem 1rem;
+  background-color: #4A90E2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.search-form button:hover {
+  background-color: #357ABD;
+}
 
 </style>
 @endpush

@@ -71,5 +71,23 @@ class StudentController extends Controller
         return redirect()->route('student.list')->with('success', 'Student deleted successfully!');
     }
 
+    public function searchStudentList(Request $request)
+    {
+        $search = $request->input('search');
+        
+        $query = Student::query();
+        
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                ->orWhere('email', 'like', '%' . $search . '%')
+                ->orWhere('course', 'like', '%' . $search . '%');
+            });
+        }
+        
+        $students = $query->paginate(10); // or ->get() if you don't want pagination
+        
+        return view('students.studentView', compact('students', 'search'));
+    }
         
 }

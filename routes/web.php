@@ -20,6 +20,9 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/student/{id}', [StudentController::class, 'update'])->name('student.update');
 
     Route::delete('/student/{id}', [StudentController::class, 'destroy'])->name('student.destroy');
+
+    Route::get('/student', [StudentController::class, 'searchStudentList'])->name('student.list');
+
 });
 
 
@@ -35,4 +38,7 @@ Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name(
 Route::get('/reset-password/{token}', function ($token) {
     return view('auth.reset-password', ['token' => $token]);
     })->middleware('guest')->name('password.reset');
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 
